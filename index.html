@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GM Chain - EthereumOS Mini Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon fill='%234a9eff' points='50,10 80,40 50,70 20,40'/><path fill='black' d='M35,25 L35,55 M45,15 L45,65 M55,15 L55,35 M55,45 L55,65 M65,25 L65,55 M40,30 Q50,25 60,30 M40,50 Q50,45 60,50'/></svg>">
+</head>
+<body>
+    <div class="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" id="minigames-folder" ondblclick="openMinigamesFolder()">
+            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><rect x='2' y='6' width='28' height='20' fill='%23ffd700' stroke='%23000' stroke-width='1'/><rect x='4' y='8' width='24' height='16' fill='%23ffff80'/><rect x='2' y='4' width='12' height='4' fill='%23ffd700' stroke='%23000' stroke-width='1'/></svg>" alt="Folder">
+            <span>MiniGames</span>
+        </div>
+        
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="start-button">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon fill='%234a9eff' points='50,10 80,40 50,70 20,40'/><path fill='black' d='M35,25 L35,55 M45,15 L45,65 M55,15 L55,35 M55,45 L55,65 M65,25 L65,55 M40,30 Q50,25 60,30 M40,50 Q50,45 60,50'/></svg>" alt="EthereumOS" class="start-logo">
+                Start
+            </div>
+            <div class="taskbar-center">
+                <div class="taskbar-item" id="gm-chain-taskbar" style="display: none;">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon fill='%234a9eff' points='50,10 80,40 50,70 20,40'/><path fill='black' d='M35,25 L35,55 M45,15 L45,65 M55,15 L55,35 M55,45 L55,65 M65,25 L65,55 M40,30 Q50,25 60,30 M40,50 Q50,45 60,50'/></svg>" alt="GM Chain">
+                    GM Chain
+                </div>
+            </div>
+            <div class="taskbar-time" id="taskbar-time">22:36</div>
+        </div>
+
+        <!-- MiniGames Folder Window -->
+        <div class="window folder-window" id="minigames-window" style="display: none;">
+            <div class="window-header" onmousedown="startDrag(event, 'minigames-window')">
+                <div class="window-title">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 32 32'><rect x='2' y='6' width='28' height='20' fill='%23ffd700' stroke='%23000' stroke-width='1'/><rect x='4' y='8' width='24' height='16' fill='%23ffff80'/><rect x='2' y='4' width='12' height='4' fill='%23ffd700' stroke='%23000' stroke-width='1'/></svg>" class="window-icon">
+                    MiniGames
+                </div>
+                <div class="window-controls">
+                    <button class="window-button minimize" onclick="minimizeWindow('minigames-window')">_</button>
+                    <button class="window-button maximize" onclick="maximizeWindow('minigames-window')">□</button>
+                    <button class="window-button close" onclick="closeWindow('minigames-window')">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="folder-content">
+                    <div class="file-icon" ondblclick="openGMChain()">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon fill='%234a9eff' points='50,10 80,40 50,70 20,40'/><path fill='black' d='M35,25 L35,55 M45,15 L45,65 M55,15 L55,35 M55,45 L55,65 M65,25 L65,55 M40,30 Q50,25 60,30 M40,50 Q50,45 60,50'/></svg>" alt="GM Chain">
+                        <span>GM Chain.exe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Window -->
+        <div class="window" id="game-window" style="display: none;">
+            <div class="window-header" onmousedown="startDrag(event, 'game-window')">
+                <div class="window-title">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon fill='%234a9eff' points='50,10 80,40 50,70 20,40'/><path fill='black' d='M35,25 L35,55 M45,15 L45,65 M55,15 L55,35 M55,45 L55,65 M65,25 L65,55 M40,30 Q50,25 60,30 M40,50 Q50,45 60,50'/></svg>" alt="EthereumOS" class="window-icon">
+                    GM Chain - EthereumOS Game
+                </div>
+                <div class="window-controls">
+                    <button class="window-button minimize" onclick="minimizeWindow('game-window')">_</button>
+                    <button class="window-button maximize" onclick="maximizeWindow('game-window')">□</button>
+                    <button class="window-button close" onclick="closeGameWindow()">×</button>
+                </div>
+            </div>
+            
+            <div class="window-content">
+                <!-- Game Info Panel -->
+                <div class="info-panel">
+                    <div class="info-group">
+                        <label>Current Streak:</label>
+                        <span id="current-streak" class="streak-counter">0</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Miss Combo:</label>
+                        <span id="miss-streak" class="miss-counter">0</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Time Left:</label>
+                        <span id="time-left" class="time-counter">48:00:00</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Score:</label>
+                        <span id="score" class="score-counter">0</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Health:</label>
+                        <div class="health-bar">
+                            <div class="health-fill" id="health-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Canvas -->
+                <canvas id="game-canvas" width="600" height="400"></canvas>
+
+                <!-- Control Panel -->
+                <div class="control-panel">
+                    <button class="retro-button" id="start-game">Start Game</button>
+                    <button class="retro-button" id="reset-game">Reset</button>
+                    <div class="instructions">
+                        <strong>Instructions:</strong> Click GM buttons, avoid bombs! 10 misses = Game Over. Can you survive 48 hours?
+                    </div>
+                </div>
+                
+                <!-- Creator Credit -->
+                <div class="creator-credit">
+                    Created by <strong>eCox</strong> for EthereumOS Community 🚀
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Dialog -->
+        <div class="dialog game-over-dialog" id="game-over-dialog" style="display: none;">
+            <div class="dialog-header">
+                <span>🎮 Game Over - GM Chain</span>
+                <button class="window-button close" onclick="closeGameOver()">×</button>
+            </div>
+            <div class="dialog-content">
+                <div class="game-over-content">
+                    <h2 id="game-over-title">Challenge Failed!</h2>
+                    <div class="game-over-stats">
+                        <div class="stat-item">
+                            <label>Final Score:</label>
+                            <span id="final-score" class="final-score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>Max Streak:</label>
+                            <span id="final-streak">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>Time Survived:</label>
+                            <span id="time-survived">0h 0m 0s</span>
+                        </div>
+                        <div class="stat-item">
+                            <label>Total Misses:</label>
+                            <span id="total-misses">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="share-section">
+                        <h3>🚀 Share Your Achievement!</h3>
+                        <div class="share-buttons">
+                            <button class="share-button twitter-share" onclick="shareOnTwitter()">
+                                📱 Share on X (Twitter)
+                            </button>
+                            <button class="share-button screenshot-share" onclick="shareScreenshot()">
+                                📸 Copy Screenshot
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-message">
+                        <p><strong>48-Hour Challenge:</strong> Who can survive the longest?</p>
+                        <p>Join the hunt for the ultimate GM Chain champions! 🏆</p>
+                    </div>
+                </div>
+                
+                <div class="game-over-buttons">
+                    <button class="retro-button" onclick="restartGame()">Play Again</button>
+                    <button class="retro-button" onclick="closeGameOver()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Dialog -->
+        <div class="dialog" id="about-dialog" style="display: none;">
+            <div class="dialog-header">
+                <span>About GM Chain</span>
+                <button class="window-button close" id="close-about">×</button>
+            </div>
+            <div class="dialog-content">
+                <div class="about-content">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon fill='%234a9eff' points='50,10 80,40 50,70 20,40'/><path fill='black' d='M35,25 L35,55 M45,15 L45,65 M55,15 L55,35 M55,45 L55,65 M65,25 L65,55 M40,30 Q50,25 60,30 M40,50 Q50,45 60,50'/></svg>" alt="EthereumOS" class="about-logo">
+                    <h3>GM Chain v2.0</h3>
+                    <p>A mini-game inspired by EthereumOS's 48-hour GM Heartbeat mechanism.</p>
+                    <p><strong>Objective:</strong> Survive 48 hours by clicking GM buttons and avoiding bombs!</p>
+                    <p><strong>Challenge:</strong> 10 misses = Game Over. Progressive difficulty!</p>
+                    <p>Created by <strong>eCox</strong> for the EthereumOS community 🚀</p>
+                </div>
+                <button class="retro-button" id="about-ok">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Windows 95/98 Style Notification System -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="window-manager.js"></script>
+    <script src="game.js"></script>
+    
+    <script>
+        // Global functions for window events
+        function startDrag(event, windowId) {
+            windowManager.startDrag(event, windowId);
+        }
+        
+        function minimizeWindow(windowId) {
+            windowManager.minimizeWindow(windowId);
+        }
+        
+        function maximizeWindow(windowId) {
+            windowManager.maximizeWindow(windowId);
+        }
+        
+        function closeWindow(windowId) {
+            windowManager.closeWindow(windowId);
+        }
+        
+        function openFolder() {
+            windowManager.openWindow('minigames-window');
+        }
+        
+        function openGame() {
+            windowManager.openWindow('game-window');
+            if (typeof initGame === 'function') {
+                initGame();
+            }
+        }
+        
+        function openAbout() {
+            windowManager.showAbout();
+        }
+        
+        function closeAbout() {
+            windowManager.closeAbout();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "gm-chain-ethereumos",
+  "version": "1.0.0",
+  "description": "GM Chain - EthereumOS Mini Game with retro Windows 95/98 theme",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000 --open=/index.html",
+    "dev": "live-server --port=3000 --open=/index.html --watch=.",
+    "build": "echo 'No build process needed - pure HTML/CSS/JS'",
+    "test": "echo 'No tests configured yet'"
+  },
+  "keywords": [
+    "game",
+    "html5",
+    "canvas",
+    "ethereum",
+    "ethereumos",
+    "retro",
+    "windows95",
+    "gm",
+    "defi",
+    "mini-game"
+  ],
+  "author": "EthereumOS Community",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethereumos/gm-chain"
+  },
+  "homepage": "https://ethereumos.github.io/gm-chain",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
